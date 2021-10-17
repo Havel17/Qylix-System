@@ -9,6 +9,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#DDDDDD</color>
-    <color name="darkGray">#CDCDCD</color>
+    <color name="mediumGray">#CDCDCD</color>
+    <color name="darkGray">#A6A6A6</color>
 
 </resources>

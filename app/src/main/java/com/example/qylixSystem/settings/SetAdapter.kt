@@ -1,7 +1,5 @@
 package com.example.qylixSystem.settings
 
-import android.os.Parcel
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -15,22 +13,16 @@ import kotlinx.android.synthetic.main.model_currency.view.scaleName
 import kotlinx.android.synthetic.main.model_setting.view.*
 
 
-class SetAdapter() : RecyclerView.Adapter<SetAdapter.SetViewHolder>(), Parcelable {
+class SetAdapter() : RecyclerView.Adapter<SetAdapter.SetViewHolder>() {
     var currencies = mutableListOf<Currency>()
     private val pref = SharedPreferencesRepository
     private lateinit var mDragStartListener: OnStartDragListener
-
-    constructor(parcel: Parcel) : this() {
-
-    }
 
     constructor(dragStartListener: OnStartDragListener) : this() {
         mDragStartListener = dragStartListener
     }
 
-
     interface OnStartDragListener {
-
         fun onStartDrag(viewHolder: RecyclerView.ViewHolder)
     }
 
@@ -68,26 +60,5 @@ class SetAdapter() : RecyclerView.Adapter<SetAdapter.SetViewHolder>(), Parcelabl
                 pref.putBoolean(currency.charCode, switch.isChecked)
             }
         }
-
     }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<SetAdapter> {
-        override fun createFromParcel(parcel: Parcel): SetAdapter {
-            return SetAdapter(parcel)
-        }
-
-        override fun newArray(size: Int): Array<SetAdapter?> {
-            return arrayOfNulls(size)
-        }
-    }
-
-
 }

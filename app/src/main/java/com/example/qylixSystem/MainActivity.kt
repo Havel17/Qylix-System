@@ -2,28 +2,23 @@ package com.example.qylixSystem
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.opengl.Visibility
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.view.View.GONE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintSet.GONE
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import com.example.qylixSystem.currencies.CurFragment
 import com.example.qylixSystem.repository.SharedPreferencesRepository
 import com.example.qylixSystem.settings.SetFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
+
     // true: открыть настройки: false: открыть курсы валют
     private var event = true
 
@@ -51,9 +46,12 @@ class MainActivity : AppCompatActivity() {
         setting.setOnClickListener {
             if (event) {
                 setting.setImageResource(android.R.drawable.ic_menu_save)
+                text_tool_bar.text = "Настройка валют"
                 fr = SetFragment(); event = !event
             } else {
                 setting.setImageResource(android.R.drawable.ic_menu_preferences)
+                text_tool_bar.text = "Курсы валют"
+
                 SharedPreferencesRepository.saveData()
                 fr = CurFragment();event = !event
             }
@@ -79,8 +77,8 @@ class MainActivity : AppCompatActivity() {
                     .remove(frag)
                     .commit()
             }
-                setting.visibility = View.GONE
-                Toast.makeText(baseContext, "Нет интернет соединения", Toast.LENGTH_LONG).show();
+            setting.visibility = View.GONE
+            Toast.makeText(baseContext, "Нет интернет соединения", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -104,13 +102,14 @@ class MainActivity : AppCompatActivity() {
                 && mConMgr.activeNetworkInfo!!.isConnected)
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
                 if (!event) {
                     event = !event
                     onBackPressed()
+                    text_tool_bar.text = "Курсы валют"
+                    setting.setImageResource(android.R.drawable.ic_menu_preferences)
                     true
                 } else {
                     super.onOptionsItemSelected(item)

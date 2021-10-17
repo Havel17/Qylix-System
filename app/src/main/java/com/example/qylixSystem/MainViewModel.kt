@@ -1,13 +1,7 @@
 package com.example.qylixSystem
 
-import android.annotation.SuppressLint
-import android.app.Application
-import android.content.Context
-import android.content.SharedPreferences
-import android.util.Log
-import android.widget.Toast
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.qylixSystem.model.Currency
 import com.example.qylixSystem.repository.RetrofitClient
 import org.xmlpull.v1.XmlPullParser
@@ -20,7 +14,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+class MainViewModel() : ViewModel() {
     var currenciesXml = MutableLiveData<MutableList<Currency>>()
     var isError = MutableLiveData<Boolean>()
     fun apiGet(date: String, callback: Callback<String>) {
@@ -43,12 +37,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             })
     }
 
-    /* ПОнимаю что код вообще ни по какому стандарту не подходит, но это все что я смог найти в интернете за вечер и сделать так что бы оно работало))
+    /* ПОнимаю что код вообще ни по какому стандарту не подходит, но это все что я смог найти в интернете за вечер и сделать так что бы оно работало :)
        если кратко, то тут 3 запроса в сеть с 3мя колбэками, 2 запроса отправляется обычно, 3-ий запрос отправляется, когда нету ответа от завтрашнего дня
 
        */
+    //
     fun getCurrencies(date: String): Boolean {
-        // статус для отображения на фрагменте корректной даты. true: сегодня-завтра, false: вчера-сегодня
+        // dateStatus статус для отображения на фрагменте корректной даты. true: сегодня-завтра, false: вчера-сегодня
         var dateStatus = true
         var tomorrow: MutableList<Currency>
         val cal = Calendar.getInstance()
@@ -119,7 +114,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return dateStatus
     }
 
-    // парсинг тоже какой нашел за вечер такой и использовал
+    // парсинг xml,  тоже какой нашел за вечер такой и использовал
     fun parser(data: String): MutableList<Currency> {
         val currencies = mutableListOf<Currency>()
         var inEntry = false

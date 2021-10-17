@@ -5,5 +5,5 @@ data class Currency(
     var scale: Int,
     var name: String,
     var rate1: Double,
-    var rate2:Double
+    var rate2: Double
 )

@@ -1,14 +1,12 @@
 package com.example.qylixSystem.currencies
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.qylixSystem.MainViewModel
@@ -24,41 +22,33 @@ import java.util.*
 class CurFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
     private lateinit var curAdapter: CurAdapter
-
     private val pref = SharedPreferencesRepository
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(
-            this.requireActivity().viewModelStore,
-            ViewModelFactory()
-        ).get(MainViewModel::class.java)
-        curAdapter = CurAdapter()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_adapter, container, false)
-        val recyclerview = view.findViewById<RecyclerView>(R.id.recyclerview)
-        recyclerview.layoutManager = LinearLayoutManager(this.context)
-        recyclerview.adapter = curAdapter
-
-
-
-        return view
+        return inflater.inflate(R.layout.fragment_adapter, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        curAdapter = CurAdapter()
 
+        val recyclerview = view.findViewById<RecyclerView>(R.id.recyclerview)
+        recyclerview.layoutManager = LinearLayoutManager(this.context)
+        recyclerview.adapter = curAdapter
+
+        viewModel = ViewModelProvider(
+            this.requireActivity().viewModelStore,
+            ViewModelFactory()
+        ).get(MainViewModel::class.java)
         viewModel.currenciesXml.observe(viewLifecycleOwner, getString)
 
         init()
 
     }
-
 
     fun init() {
 
@@ -82,30 +72,30 @@ class CurFragment : Fragment() {
 
 
     private val getString = Observer<MutableList<Currency>> {
-
         curAdapter.currencies = loadPref(it)
         curAdapter.notifyDataSetChanged()
     }
 
+    //загрузка настроек
     fun loadPref(it: MutableList<Currency>): MutableList<Currency> {
         val newList = mutableListOf<Currency>()
         val curDefault = mutableListOf("RUB", "USD", "EUR")
         if (!pref.getBoolean("FirstStart")) {
             pref.putBoolean("FirstStart", true)
             it.forEachIndexed { i, it ->
-                pref.putInt(it.charCode + "_pos",i)
-                if(curDefault.contains(it.charCode)){
+                pref.putInt(it.charCode + "_pos", i)
+                if (curDefault.contains(it.charCode)) {
                     pref.putBoolean(it.charCode, true)
                     newList.add(it)
                 }
             }
             pref.saveData()
         } else {
-            val sortedList = mutableMapOf<Int,Currency>()
+            val sortedList = mutableMapOf<Int, Currency>()
             it.forEach {
                 val KEY = it.charCode
                 if (pref.getBoolean(KEY)) {
-                    sortedList.put( pref.getInt(KEY+"_pos"),it)
+                    sortedList.put(pref.getInt(KEY + "_pos"), it)
                 }
             }
             newList.addAll(sortedList.toSortedMap().values)
