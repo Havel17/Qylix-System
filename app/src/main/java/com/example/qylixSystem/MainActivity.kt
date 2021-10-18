@@ -33,7 +33,9 @@ class MainActivity : AppCompatActivity() {
             this,
             ViewModelFactory()
         ).get(MainViewModel::class.java)
-
+              viewModel.currenciesXml.observe(this, Observer {
+                  setting.visibility = View.VISIBLE
+              })
         viewModel.isError.observe(this, isError)
         SharedPreferencesRepository.init(this)
         init()
