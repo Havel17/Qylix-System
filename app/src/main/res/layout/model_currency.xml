@@ -30,10 +30,11 @@
         android:id="@+id/rate1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="240dp"
         android:layout_marginTop="8dp"
         android:text="3.3333"
+        app:layout_constraintHorizontal_bias="0.6"
         android:textStyle="bold"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,10 +42,12 @@
         android:id="@+id/rate2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="80dp"
+        app:layout_constraintHorizontal_bias="0.85"
         android:text="4.44444"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/rate1"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/rate1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

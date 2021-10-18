@@ -13,8 +13,9 @@
         <TextView
             android:id="@+id/date1"
             android:layout_width="wrap_content"
+            app:layout_constraintHorizontal_bias="0.6"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="230dp"
+            app:layout_constraintRight_toRightOf="parent"
             android:textColor="@color/cardview_dark_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -24,10 +25,11 @@
             android:id="@+id/date2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
+            app:layout_constraintHorizontal_bias="0.85"
+            app:layout_constraintRight_toRightOf="parent"
             android:textColor="@color/cardview_dark_background"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="@+id/date1"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
 
